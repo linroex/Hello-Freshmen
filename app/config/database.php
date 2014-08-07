@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'forge',
-			'username'  => 'forge',
-			'password'  => '',
+			'host'      => '127.0.0.1',
+			'database'  => 'hello_freshmen',
+			'username'  => 'freshmen',
+			'password'  => 'j2YHqe2QLG5WL9A6',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
