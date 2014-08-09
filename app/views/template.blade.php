@@ -39,6 +39,17 @@
                 e.preventDefault();
                 searchFreshmen();
             })
+            $('.btn-option').click(function(e){
+                e.preventDefault();
+                $(this).addClass('btn-primary');
+                $('.panel-body').has(this).children('.btn').not(this).removeClass('btn-primary');
+            })
+            $('#identity_block .btn').click(function(){
+                $('#identity').val($(this).attr('value'));
+            })
+            $('#exam_type_block .btn').click(function(){
+                $('#exam_type').val($(this).attr('value'));
+            })
         })
     </script>
     <script>
@@ -46,7 +57,9 @@
             FB.getLoginStatus(function(res){
                 
                 if(res.status == 'connected'){
-                    $('#FbLoginBtn').hide();
+                    $('#login_block').hide();
+                    $('#main_block').css('display','block');
+
                     console.log('login success');
                     LoadUserData();
                 }else{
@@ -56,15 +69,14 @@
         }
         function LoadUserData(){
             FB.api('/me/picture','get',{type:'large'},function(res){
-                $('#freshmen_img').attr('src',res.data.url);
+                // $('#freshmen_img').attr('src',res.data.url);
             })
             FB.api('/me',function(res){
-                $('#fi_name').text(res.name);
-                $('#facebook_id').val(res.id);
+                $('#facebook').val(res.id);
             })
         }
         function addFreshmen(){
-            $.post('add',$('#add_form').serialize(),function(res){
+            $.post('add',$('#data_form').serialize(),function(res){
                 if(res == 'ok'){
                     alert('新增成功');
                 }else{
@@ -73,7 +85,7 @@
             });
         }
         function searchFreshmen(){
-            $.post('search',$('#search_form').serialize(),function(res){
+            $.post('search',$('#data_form').serialize(),function(res){
                 if(res == 'ok'){
                     console.log(res);
                 }else{
@@ -93,42 +105,50 @@
     <!-- bs-docs-header end -->
 
     <div class="container">
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <p class="panel-title">1. 選擇身分</p>
-                </div>
-                <div class="panel-body">
-                    
-                    <a href="" class="btn btn-default btn-block">我是舊生，我想找學弟妹</a>
-                    <a href="" class="btn btn-default btn-block">我是新生，我想找同學</a>
-                    <a href="" class="btn btn-default btn-block">我是新生，我想被同學找</a>
+        <div class="row text-center" id="login_block">
+            <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+        </div>
+        <div class="row" style="display:none;" id="main_block">
+            <div class="col-md-4" id="identity_block">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <p class="panel-title">1. 選擇身分</p>
+                    </div>
+                    <div class="panel-body">
+                        
+                        <a value="0" href="" class="btn-option btn btn-default btn-block">我是舊生，我想找學弟妹</a>
+                        <a value="1" href="" class="btn-option btn btn-default btn-block">我是新生，我想找同學</a>
+                        <a value="2" href="" class="btn-option btn btn-default btn-block">我是新生，我想被同學找</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <p class="panel-title">2. 選擇考試類型</p>
-                </div>
-                <div class="panel-body">
-                    <a href="" class="btn btn-default btn-block">統測</a>
-                    <a href="" class="btn btn-default btn-block">學測</a>
-                    <a href="" class="btn btn-default btn-block">指考</a>
+            <div class="col-md-4" id="exam_type_block">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <p class="panel-title">2. 選擇考試類型</p>
+                    </div>
+                    <div class="panel-body">
+                        <a value="JCEE" href="" class="btn-option btn btn-default btn-block">統測</a>
+                        <a value="GCAT" href="" class="btn-option btn btn-default btn-block">學測</a>
+                        <a value="AST" href="" class="btn-option btn btn-default btn-block">指考</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <p class="panel-title">3. 輸入准考證號碼 </p>
-                </div>
-                <div class="panel-body">
-                    <form action="">
-                        <input type="text" placeholder="准考證號碼" class="form-control">
-                        <br>
-                        <input type="submit" value="查詢" class="btn-block btn-lg btn btn-primary">
-                    </form>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <p class="panel-title">3. 輸入准考證號碼 </p>
+                    </div>
+                    <div class="panel-body">
+                        <form action="" id="data_form">
+                            <input type="hidden" name="facebook" id="facebook">
+                            <input type="hidden" name="exam_type" id="exam_type">
+                            <input type="hidden" name="identity" id="identity">
+                            <input type="text" name="ticket" placeholder="准考證號碼" class="form-control">
+                            <br>
+                            <input type="submit" value="查詢" class="btn-block btn-lg btn btn-primary">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
