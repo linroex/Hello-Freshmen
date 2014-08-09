@@ -15,3 +15,45 @@ Route::get('/', function()
 {
 	return View::make('template');
 });
+Route::post('/add',function(){
+    $validator = Validator::make(array(
+        'type'=>Input::get('type'),
+        'ticket'=>Input::get('ticket_num'),
+        'facebook'=>Input::get('facebook_id')
+    ),array(
+        'type'=>'required',
+        'ticket'=>'required|numeric',
+        'facebook'=>'required|unique:freshmen'
+    ));
+
+    if($validator->fails()){
+        return $validator->messages();
+    }else{
+        Freshmen::insert(array(
+            'type'=>Input::get('type'),
+            'ticket'=>Input::get('ticket_num'),
+            'facebook'=>Input::get('facebook_id')
+        ));
+        return 'ok';
+    }
+});
+Route::post('/search',function(){
+    $validator = Validator::make(array(
+        'type'=>Input::get('type'),
+        'ticket'=>Input::get('ticket_num')
+    ),array(
+        'type'=>'required',
+        'ticket'=>'required'
+    ));
+
+    if($validator->fails()){
+        return $validator->messages();
+    }else{
+        $tickets = explode('\n', Input::get('ticket_num'));
+        foreach ($tickets as $ticket) {
+            dd(Freshmen::where('ticket','=',trim($ticket)));
+        }
+        
+        return 'ok';
+    }
+});

@@ -22,7 +22,7 @@ class CreateFreshmenTable extends Migration {
 			*/
 			$table->text('ticket');
 			$table->text('facebook');
-
+			$table->timestamps();
 		});
 	}
 
@@ -33,7 +33,7 @@ class CreateFreshmenTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schame::drop('freshmen');
 	}
 
 }
