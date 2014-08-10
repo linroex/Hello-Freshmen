@@ -21,6 +21,7 @@
                     version    : 'v2.0'
                 });
                 CheckLogin();
+                FB.Event.subscribe('auth.statusChange', CheckLogin);
             };
 
             (function(d, s, id){
@@ -30,6 +31,7 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+
         $(document).ready(function(){
             $('#data_form input:submit').click(function(e){
                 e.preventDefault();
@@ -83,7 +85,6 @@
                     $('#login_block').hide();
                     $('#main_block').css('display','block');
 
-                    console.log('login success');
                     LoadUserData();
                 }else{
                     console.log('not login');
@@ -153,6 +154,7 @@
     <!-- bs-docs-header end -->
 
     <div class="container">
+
         <div class="row text-center" id="login_block">
             <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
         </div>
