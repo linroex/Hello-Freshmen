@@ -31,14 +31,19 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         $(document).ready(function(){
-            $('#add_form input:submit').click(function(e){
+            $('#data_form input:submit').click(function(e){
                 e.preventDefault();
-                addFreshmen();
+                if($('#identity').val() == '' || $('#exam_type').val() == ''){
+                    alert('請選擇身分或考試類型');
+                    return;
+                }
+                if($('#identity').val() == 0){
+                    addFreshmen();
+                }else{
+                    searchFreshmen();
+                }
             })
-            $('#search_form input:submit').click(function(e){
-                e.preventDefault();
-                searchFreshmen();
-            })
+            
             $('.btn-option').click(function(e){
                 e.preventDefault();
                 $(this).addClass('btn-primary');
@@ -46,6 +51,24 @@
             })
             $('#identity_block .btn').click(function(){
                 $('#identity').val($(this).attr('value'));
+                switch($(this).attr('value')){
+                    case '0':
+                        $('#ticket_input').after('<input type="text" id="ticket_input" name="ticket" placeholder="准考證號碼" class="form-control">')
+                        $('#ticket_input').remove();
+                        $('input:submit').val('登記');
+                        break;
+                    case '1':
+                        $('#ticket_input').after('<textarea class="form-control" rows="5" name="ticket" id="ticket_input"></textarea>')
+                        $('#ticket_input').remove();
+                        $('input:submit').val('查詢');
+                        break;
+                    case '2':
+                        $('#ticket_input').after('<textarea class="form-control" rows="5" name="ticket" id="ticket_input"></textarea>')
+                        $('#ticket_input').remove();
+                        $('input:submit').val('查詢');
+                        break;
+
+                }
             })
             $('#exam_type_block .btn').click(function(){
                 $('#exam_type').val($(this).attr('value'));
@@ -68,29 +91,53 @@
             })
         }
         function LoadUserData(){
-            FB.api('/me/picture','get',{type:'large'},function(res){
-                // $('#freshmen_img').attr('src',res.data.url);
-            })
             FB.api('/me',function(res){
                 $('#facebook').val(res.id);
             })
         }
+        function showModal(title,body){
+            $('#myModal .modal-title').text(title)
+            $('#myModal .modal-body').html(body)
+            $('#myModal').modal();
+        }
         function addFreshmen(){
             $.post('add',$('#data_form').serialize(),function(res){
                 if(res == 'ok'){
-                    alert('新增成功');
+                    var str = "您的資料已經新增成功<br />接下來，什麼也不用做，靜靜等候你的學長姊、同學來找你吧！"
+                    showModal('新增成功', str);
                 }else{
-                    console.log(res);
+                    showModal('新增失敗', res.join("<br/>"));
                 }
+                $('#data_form input:text').val('');
             });
         }
         function searchFreshmen(){
             $.post('search',$('#data_form').serialize(),function(res){
-                if(res == 'ok'){
-                    console.log(res);
-                }else{
-                    console.log(res);
+                res = JSON.parse(res);
+                var ticket = $('#ticket_input').val().split("\n");
+                console.log(ticket);
+                if(res.status == 'success'){
+                    var str = "<p>查詢結果如下：</p>";
+                    $.each(res.data, function(i){
+                        if(res.data[i] == 'null'){
+                            str += "准考證號碼：" + ticket[i] + " 查無此人<br />";
+                        }else{
+                            var img = '';
+                            FB.api(res.data[i] + '/picture','get',{type:'large'},function(resp){
+                                FB.api(res.data[i],function(user_data){
+                                    str = '<div class="col-md-3"><a target="_blank" href="https://www.facebook.com/' + res.data[i] + '"><img src="' + resp.data.url + '" class="col-md-12 img-rounded" alt="" /></a><br /> <p class="text-center">' + user_data.name + '</p> </div>';
+
+                                    var origin = $('#myModal .modal-body').html();
+                                    $('#myModal .modal-body').html(origin + str);
+                                })
+                            });
+                        }
+                    })
+                    showModal('查詢成功', str);
+                }else if(res.status == 'error'){
+                    showModal('查詢失敗', res.data.join("<br/>"));
                 }
+                $('#data_form textarea').text('');
             });
         }
     </script>
@@ -100,6 +147,7 @@
         <div class="container">
             <h1>Hello 新生！</h1>
             <p>身為學長姊，迫不及待想找出你的學弟妹嘛？身為大一新鮮人，迫不及待想知道你的同學是誰嘛？別猶豫，我們將會是你最好的幫手！</p>
+            
         </div>
     </div>
     <!-- bs-docs-header end -->
@@ -108,6 +156,7 @@
         <div class="row text-center" id="login_block">
             <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
         </div>
+        
         <div class="row" style="display:none;" id="main_block">
             <div class="col-md-4" id="identity_block">
                 <div class="panel panel-primary">
@@ -115,10 +164,10 @@
                         <p class="panel-title">1. 選擇身分</p>
                     </div>
                     <div class="panel-body">
+                        <a value="0" href="" class="btn-option btn btn-default btn-block">我是新生，我想被同學找</a>
+                        <a value="1" href="" class="btn-option btn btn-default btn-block">我是舊生，我想找學弟妹</a>
+                        <a value="2" href="" class="btn-option btn btn-default btn-block">我是新生，我想找同學</a>
                         
-                        <a value="0" href="" class="btn-option btn btn-default btn-block">我是舊生，我想找學弟妹</a>
-                        <a value="1" href="" class="btn-option btn btn-default btn-block">我是新生，我想找同學</a>
-                        <a value="2" href="" class="btn-option btn btn-default btn-block">我是新生，我想被同學找</a>
                     </div>
                 </div>
             </div>
@@ -140,13 +189,13 @@
                         <p class="panel-title">3. 輸入准考證號碼 </p>
                     </div>
                     <div class="panel-body">
-                        <form action="" id="data_form">
+                        <form action="{{url('search')}}" method="post" id="data_form">
                             <input type="hidden" name="facebook" id="facebook">
                             <input type="hidden" name="exam_type" id="exam_type">
                             <input type="hidden" name="identity" id="identity">
-                            <input type="text" name="ticket" placeholder="准考證號碼" class="form-control">
+                            <input type="text" id="ticket_input" name="ticket" placeholder="准考證號碼" class="form-control">
                             <br>
-                            <input type="submit" value="查詢" class="btn-block btn-lg btn btn-primary">
+                            <input type="submit" value="登記" class="btn-block btn-lg btn btn-primary">
                         </form>
                     </div>
                 </div>
@@ -160,7 +209,7 @@
         </div>
     </footer>
 
-    <div class="modal fade">
+    <div class="modal fade" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -170,6 +219,7 @@
           <div class="modal-body" id="search_result">
             
           </div>
+          <div class="clearfix"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
