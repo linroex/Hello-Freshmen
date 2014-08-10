@@ -1,7 +1,9 @@
 <?php
 class FreshmenController extends Controller{
     public function showIndex(){
-        return View::make('template');
+        return View::make('template')->with(array(
+            'count'=>Freshmen::all()->count()
+        ));
     }
     public function add(){
         $validator = Validator::make(array(

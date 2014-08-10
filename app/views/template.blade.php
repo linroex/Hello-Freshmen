@@ -146,14 +146,18 @@
 <body>
     <div class="bs-docs-header">
         <div class="container">
-            <h1>Hello 新生！</h1>
-            <p>身為學長姊，迫不及待想找出你的學弟妹嘛？身為大一新鮮人，迫不及待想知道你的同學是誰嘛？別猶豫，我們將會是你最好的幫手！</p>
+            <h1>Hello 新生！ <p style="font-size:17px;" class="label label-primary">現在記錄數：{{{$count}}}人</p></h1>
+            <p>每到榜單公布，總是迫不及待的想加學弟妹Facebook卻查不到嘛？身為新生，想要先認識自己學長姊，了解學校的相關事務卻不知道找誰嘛？或是想認識新同學，但榜單上的名字拿去搜尋Facebook，卻半個同學也找不到？</p>
             
         </div>
     </div>
     <!-- bs-docs-header end -->
 
     <div class="container">
+        <div class="lead">
+            <p>「Hello 新生」希望可以解決這個問題，作為新生與舊生的媒婆，新生可以在這裡將臉書帳號和准考證號碼進行綁定，而舊生則可以直接輸入准考證號碼找到新生的Facebook，每行可以輸入一個准考證號碼。這不是魔術，這一切的媒和成功，來自於我們資料庫中的記錄數量，所以請不要猶豫，趕快把這個網站分享給你的朋友吧！</p>
+            <div class="fb-like" data-href="{{url()}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+        </div>
 
         <div class="row text-center" id="login_block">
             <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
@@ -207,7 +211,10 @@
 
     <footer class="bs-docs-footer">
         <div class="container">
-            程式設計：台科大林熙哲
+            <a href="https://www.facebook.com/groups/657228561002804/">台科大程式設計研究社</a> 製作
+            <br>
+
+
         </div>
     </footer>
 
