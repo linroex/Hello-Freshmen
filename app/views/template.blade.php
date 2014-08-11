@@ -28,7 +28,7 @@
 
     <div class="container">
         <div class="lead">
-            <p>「Hello 新生」希望可以解決這個問題，作為新生與舊生的媒婆，新生可以在這裡將臉書帳號和准考證號碼進行綁定，而舊生則可以直接輸入准考證號碼找到新生的Facebook，每行可以輸入一個准考證號碼。這不是魔術，這一切的媒和成功，來自於我們資料庫中的記錄數量，所以請不要猶豫，趕快把這個網站分享給你的朋友吧！</p>
+            <p>「Hello 新生」希望可以解決這個問題，作為新生與舊生的媒婆，新生可以在這裡將臉書帳號和准考證號碼進行綁定，而舊生則可以直接輸入准考證號碼找到新生的Facebook，每行可以輸入一個准考證號碼。這不是魔術，這一切的媒合成功，來自於我們資料庫中的記錄數量，所以請不要猶豫，趕快把這個網站分享給你的朋友吧！</p>
             <div class="fb-like" data-href="{{url()}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
 
@@ -84,7 +84,7 @@
 
     <footer class="bs-docs-footer">
         <div class="container">
-            <a href="https://www.facebook.com/groups/657228561002804/">台科大程式設計研究社</a> 製作
+            <a href="https://www.facebook.com/groups/657228561002804/">台科大程式設計研究社</a> 製作。the Misk
         </div>
     </footer>
 
