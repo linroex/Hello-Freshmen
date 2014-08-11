@@ -33,7 +33,7 @@
         </div>
 
         <div class="row text-center" id="login_block">
-            <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+            <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false">第一步，登入Facebook！</div>
         </div>
         
         <div class="row" style="display:none;" id="main_block">
