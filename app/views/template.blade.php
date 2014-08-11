@@ -29,6 +29,7 @@
     <div class="container">
         <div class="lead">
             <p>「Hello 新生」希望可以解決這個問題，作為新生與舊生的媒婆，新生可以在這裡將臉書帳號和准考證號碼進行綁定，而舊生則可以直接輸入准考證號碼找到新生的Facebook，每行可以輸入一個准考證號碼。這不是魔術，這一切的媒合成功，來自於我們資料庫中的記錄數量，所以請不要猶豫，趕快把這個網站分享給你的朋友吧！</p>
+            <p class="text-muted">如果你是新生，你要填的是你的准考證號碼！！如果你是舊生或是想找人，你要填的是「別人」的准考證號碼。</p>
             <div class="fb-like" data-href="{{url()}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
 
