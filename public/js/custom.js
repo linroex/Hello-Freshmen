@@ -64,7 +64,7 @@ function searchFreshmen(){
 
 window.fbAsyncInit = function() {
     FB.init({
-            appId      : '859157527427936',
+            appId      : '639222002851918',
             xfbml      : true,
             version    : 'v2.0'
         });
