@@ -85,7 +85,7 @@
 
     <footer class="bs-docs-footer">
         <div class="container">
-            <a href="https://www.facebook.com/groups/657228561002804/">台科大程式設計研究社</a> 製作。the Misk
+            <a href="https://www.facebook.com/groups/657228561002804/">台科大程式設計研究社、學生會資訊部</a> 製作。the Misk
         </div>
     </footer>
 
